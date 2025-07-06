@@ -96,9 +96,9 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        buildNavIcon(index: 0, activePath: 'lib/icons/homeActive.png', inactivePath: 'lib/icons/homeInactive.png', size: 28),
-                        buildNavIcon(index: 1, activePath: 'lib/icons/notificationActive.png', inactivePath: 'lib/icons/notificationInactive.png', size: 30),
-                        buildNavIcon(index: 2, activePath: 'lib/icons/profileActive.png', inactivePath: 'lib/icons/profileInactive.png', size: 28),
+                        buildNavIcon(index: 0, activePath: 'assets/icons/homeActive.png', inactivePath: 'assets/icons/homeInactive.png', size: 28),
+                        buildNavIcon(index: 1, activePath: 'assets/icons/notificationActive.png', inactivePath: 'assets/icons/notificationInactive.png', size: 31),
+                        buildNavIcon(index: 2, activePath: 'assets/icons/profileActive.png', inactivePath: 'assets/icons/profileInactive.png', size: 28),
                       ],
                     ),
                   ),

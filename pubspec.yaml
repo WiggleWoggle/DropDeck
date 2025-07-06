@@ -41,7 +41,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   assets:
-    - lib/icons/
+    - assets/icons/
 
   uses-material-design: true
 
@@ -61,6 +61,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Glacial
+      fonts:
+      - asset: assets/fonts/GlacialIndifference-Regular.otf
   # fonts:
   #   - family: Schyler
   #     fonts:
