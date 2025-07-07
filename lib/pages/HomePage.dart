@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TopBanner(),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Center(
                   child: SizedBox(
@@ -94,51 +94,61 @@ class _HomePageState extends State<HomePage> {
                       bottom: 7,
                       left: 25,
                     ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            'Upcoming Drops',
-                            style: TextStyle(
-                              fontFamily: 'Glacial',
-                              color: Colors.black,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 180,
-                            ),
-                            child: TextButton(
-
-                              //TODO: expand into new page
-                              onPressed: () {
-
-                              },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size(0, 0),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                overlayColor: Colors.transparent,
-                              ),
-                              child: Text(
-                                'See all',
-                                style: TextStyle(
-                                  fontFamily: 'Glacial',
-                                  color: Color.fromRGBO(115, 115, 115, 1),
-                                  fontSize: 17.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: SectionDivideSeeAll(
+                      sectionTitle: 'Upcoming Drops',
+                      seeAllPadding: 180,
+                    )
                 ),
                 WideSpreadDynamicBanner(
                   bannerItemCount: 3,
+                  bannerWidth: 380,
+                  bannerHeight: 170,
+                  showBannerIndicator: true,
+                  viewportFraction: 1.0,
                 ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 40,
+                    bottom: 7,
+                    left: 25,
+                  ),
+                  child: SectionDivideSeeAll(
+                    sectionTitle: 'New Drops',
+                    seeAllPadding: 230,
+                  )
+                ),
+                //TODO: add more sample images to mess with fit
+                WideSpreadDynamicBanner(
+                  bannerItemCount: 3,
+                  bannerWidth: 270,
+                  bannerHeight: 230,
+                  showBannerIndicator: false,
+                  viewportFraction: 0.7,
+                ),
+                Container(
+                  width: 230,
+                  height: 50,
+                  child: Column(
+                    children: [
+                      Text(
+                        'White and Crimson',
+                        style: TextStyle(
+                            fontFamily: 'Glacial',
+                            fontSize: 17,
+                            color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Air Force 1 \'07',
+                        style: TextStyle(
+                          fontFamily: 'Glacial',
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  )
+                )
               ],
             ),
           )
@@ -167,8 +177,18 @@ class TopBanner extends StatelessWidget {
 class WideSpreadDynamicBanner extends StatefulWidget {
 
   final int bannerItemCount;
+  final double bannerWidth;
+  final double bannerHeight;
+  final double viewportFraction;
+  final bool showBannerIndicator;
 
-  const WideSpreadDynamicBanner({Key? key, required this.bannerItemCount}) : super(key: key);
+  const WideSpreadDynamicBanner({Key? key,
+    required this.bannerItemCount,
+    required this.bannerWidth,
+    required this.bannerHeight,
+    required this.viewportFraction,
+    required this.showBannerIndicator
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _WideSpreadDynamicBannerState();
@@ -185,13 +205,12 @@ class _WideSpreadDynamicBannerState extends State<WideSpreadDynamicBanner> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-
           CarouselSlider.builder(
             itemCount: widget.bannerItemCount,
             carouselController: _swipeableCarousel,
             options: CarouselOptions(
-              height: 170,
-              viewportFraction: 1.0,
+              height: widget.bannerHeight,
+              viewportFraction: widget.viewportFraction,
               enlargeCenterPage: false,
               enableInfiniteScroll: true,
               onPageChanged: (index, reason) {
@@ -203,12 +222,14 @@ class _WideSpreadDynamicBannerState extends State<WideSpreadDynamicBanner> {
             //image handler
             //TODO: move the images to a list and do the dynamic size somewhere else
             itemBuilder: (context, index, realIndex) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/banners/banner${index + 1}.png',
-                  fit: BoxFit.fill,
-                  width: 380,
+              return Container(
+                width: widget.bannerWidth,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/banners/banner${index + 1}.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
             },
@@ -216,25 +237,26 @@ class _WideSpreadDynamicBannerState extends State<WideSpreadDynamicBanner> {
 
           SizedBox(height: 10),
           //dynamic banner count indicator
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.bannerItemCount, (index) {
-              bool activeIndicator = index == _currentIndex;
-              return AnimatedContainer(
-                duration: Duration(
-                    milliseconds: 250
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 6),
-                width: getIndicatorWidth(index, _currentIndex),
-                height: 4,
-                decoration: BoxDecoration(
-                  //change color based on selected or not
-                  color: activeIndicator ? Colors.black : Color.fromRGBO(166, 166, 166, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              );
-            }),
-          ),
+          if (widget.showBannerIndicator)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(widget.bannerItemCount, (index) {
+                bool activeIndicator = index == _currentIndex;
+                return AnimatedContainer(
+                  duration: Duration(
+                      milliseconds: 250
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 6),
+                  width: getIndicatorWidth(index, _currentIndex),
+                  height: 4,
+                  decoration: BoxDecoration(
+                    //change color based on selected or not
+                    color: activeIndicator ? Colors.black : Color.fromRGBO(166, 166, 166, 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                );
+              }),
+            ),
         ],
       ),
     );
@@ -246,5 +268,59 @@ class _WideSpreadDynamicBannerState extends State<WideSpreadDynamicBanner> {
       return 40;
     }
     return 20;
+  }
+}
+
+class SectionDivideSeeAll extends StatelessWidget {
+
+  final String sectionTitle;
+  final double seeAllPadding;
+  //TODO: add the onpress as a parameter(?)
+
+  const SectionDivideSeeAll({Key? key, required this.sectionTitle, required this.seeAllPadding}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          Text(
+            this.sectionTitle,
+            style: TextStyle(
+              fontFamily: 'Glacial',
+              color: Colors.black,
+              fontSize: 20.0,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: this.seeAllPadding,
+            ),
+            child: TextButton(
+
+              //TODO: expand into new page
+              onPressed: () {
+
+              },
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size(0, 0),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                overlayColor: Colors.transparent,
+              ),
+              child: Text(
+                'See all',
+                style: TextStyle(
+                  fontFamily: 'Glacial',
+                  color: Color.fromRGBO(115, 115, 115, 1),
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
