@@ -41,7 +41,7 @@ class BottomTabSwitcher extends StatefulWidget {
 
 class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
 
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
   final pages = [
     HomePage(),
@@ -54,7 +54,7 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
     return Stack(
       children: [
         Positioned.fill(
-          child: pages[currentIndex],
+          child: pages[_currentIndex],
         ),
 
         Padding(
@@ -76,7 +76,7 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
                 children: [
                   //black rounded rectnagular icon background
                   AnimatedAlign(
-                    alignment: getIconBackgroundAlignment(currentIndex),
+                    alignment: getIconBackgroundAlignment(_currentIndex),
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOutCirc,
                     child: Container(
@@ -115,7 +115,7 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          currentIndex = index;
+          _currentIndex = index;
         });
       },
       child: AnimatedSwitcher(
@@ -133,7 +133,7 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
         ),
         //TODO: try a little shake animation when selecting new tab?
         //swapping image asset
-        child: Image.asset(currentIndex == index ? activePath : inactivePath, key: ValueKey<bool>(currentIndex == index), width: size, height: size,),
+        child: Image.asset(_currentIndex == index ? activePath : inactivePath, key: ValueKey<bool>(_currentIndex == index), width: size, height: size,),
       ),
     );
   }
