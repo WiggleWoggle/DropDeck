@@ -3,6 +3,8 @@ import 'package:clothing_app/pages/HomePage.dart';
 import 'package:clothing_app/pages/NotificationsPage.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as parser;
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(

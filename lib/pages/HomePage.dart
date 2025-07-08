@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -107,15 +108,15 @@ class _HomePageState extends State<HomePage> {
                   viewportFraction: 1.0,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    top: 40,
-                    bottom: 7,
-                    left: 25,
-                  ),
-                  child: SectionDivideSeeAll(
-                    sectionTitle: 'New Drops',
-                    seeAllPadding: 230,
-                  )
+                    padding: EdgeInsets.only(
+                      top: 40,
+                      bottom: 7,
+                      left: 25,
+                    ),
+                    child: SectionDivideSeeAll(
+                      sectionTitle: 'New Drops',
+                      seeAllPadding: 230,
+                    )
                 ),
                 //TODO: add more sample images to mess with fit
                 WideSpreadDynamicBanner(
@@ -126,32 +127,50 @@ class _HomePageState extends State<HomePage> {
                   viewportFraction: 0.7,
                 ),
                 Container(
-                  width: 230,
-                  height: 50,
-                  child: Column(
-                    children: [
-                      Text(
-                        'White and Crimson',
-                        style: TextStyle(
+                    width: 230,
+                    height: 50,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Air Jordan \'07',
+                          style: TextStyle(
                             fontFamily: 'Glacial',
                             fontSize: 17,
                             color: Colors.black,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Air Force 1 \'07',
-                        style: TextStyle(
-                          fontFamily: 'Glacial',
-                          fontSize: 15,
-                          color: Colors.black,
+                        Text(
+                          'Red White Green',
+                          style: TextStyle(
+                            fontFamily: 'Glacial',
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                )
+                      ],
+                    )
+                ),
+                Padding(
+                    padding: EdgeInsets.only(
+                      top: 40,
+                      bottom: 7,
+                      left: 25,
+                    ),
+                    child: SectionDivideSeeAll(
+                      sectionTitle: 'Deals',
+                      seeAllPadding: 280,
+                    )
+                ),
+                WideSpreadDynamicBanner(
+                  bannerItemCount: 3,
+                  bannerWidth: 270,
+                  bannerHeight: 230,
+                  showBannerIndicator: false,
+                  viewportFraction: 0.7,
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
