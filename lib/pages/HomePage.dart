@@ -153,7 +153,6 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                     padding: EdgeInsets.only(
                       top: 40,
-                      bottom: 7,
                       left: 25,
                     ),
                     child: SectionDivideSeeAll(
@@ -161,13 +160,17 @@ class _HomePageState extends State<HomePage> {
                       seeAllPadding: 280,
                     )
                 ),
-                WideSpreadDynamicBanner(
-                  bannerItemCount: 3,
-                  bannerWidth: 270,
-                  bannerHeight: 230,
-                  showBannerIndicator: false,
-                  viewportFraction: 0.7,
-                ),
+                Padding(
+                  padding: EdgeInsetsGeometry.symmetric(
+                    horizontal: 20
+                  ),
+                  child: DynamicImageGrid(
+                      rows: 3,
+                      columns: 3,
+                      imagePath: 'assets/banners/banner1.png',
+                      spacing: 16.0
+                  ),
+                )
               ],
             ),
           ),
@@ -340,6 +343,62 @@ class SectionDivideSeeAll extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DynamicImageGrid extends StatelessWidget {
+
+  final int rows;
+  final int columns;
+  final String imagePath;
+  final double spacing;
+
+  const DynamicImageGrid({
+    Key? key,
+    required this.rows,
+    required this.columns,
+    required this.imagePath,
+    required this.spacing,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final int itemCount = rows * columns;
+
+    return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: itemCount,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 1, // Makes each item square
+      ),
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Container(
+              width: 100,  // Or whatever square size you want
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Text('80% off nike'),
+          ],
+        );
+      },
     );
   }
 }
