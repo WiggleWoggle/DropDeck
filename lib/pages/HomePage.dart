@@ -372,31 +372,20 @@ class DynamicImageGrid extends StatelessWidget {
       itemCount: itemCount,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        mainAxisSpacing: 10,
+        mainAxisSpacing: 30,
         crossAxisSpacing: 10,
-        childAspectRatio: 1, // Makes each item square
+        childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Container(
-              width: 100,  // Or whatever square size you want
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                ),
-              ),
+        return ClipRRect(
+            child: Container(
+                width: 100,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                )
             ),
-            SizedBox(height: 10),
-            Text('80% off nike'),
-          ],
         );
       },
     );
