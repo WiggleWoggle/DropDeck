@@ -46,7 +46,8 @@ flutter:
   # the material Icons class.
   assets:
     - assets/icons/
-    - assets/banners/
+    - assets/images/banners/
+    - assets/images/products/
 
   uses-material-design: true
 

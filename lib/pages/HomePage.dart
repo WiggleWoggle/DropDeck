@@ -167,9 +167,12 @@ class _HomePageState extends State<HomePage> {
                   child: DynamicImageGrid(
                       rows: 3,
                       columns: 3,
-                      imagePath: 'assets/banners/banner1.png',
+                      imagePath: 'assets/images/banners/banner1.png',
                       spacing: 16.0
                   ),
+                ),
+                SizedBox(
+                  height: 140,
                 )
               ],
             ),
@@ -249,7 +252,7 @@ class _WideSpreadDynamicBannerState extends State<WideSpreadDynamicBanner> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
-                    'assets/banners/banner${index + 1}.png',
+                    'assets/images/banners/banner${index + 1}.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -370,22 +373,53 @@ class DynamicImageGrid extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: itemCount,
+      padding: EdgeInsets.only(
+        top: 10,
+      ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 30,
         crossAxisSpacing: 10,
-        childAspectRatio: 1,
+        childAspectRatio: 0.8,
       ),
       itemBuilder: (context, index) {
         return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            color: Colors.white,
             child: Container(
-                width: 100,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                )
+              height: 170, // adjust based on image + text height
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      height: 120,
+                      width: double.infinity,
+                      child: Image.asset(
+                        'assets/images/products/listing1.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Center(
+                    child: Text(
+                      'Up to 50% off',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.0,
+                        fontFamily: 'Glacial',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ),
         );
       },
     );

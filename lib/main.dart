@@ -56,7 +56,27 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
     return Stack(
       children: [
         Positioned.fill(
-          child: pages[_currentIndex],
+          child: AnimatedSwitcher(
+            duration: Duration(milliseconds: 200),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            transitionBuilder: (child, animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset.zero,
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              );
+            },
+            child: KeyedSubtree(
+              key: ValueKey<int>(_currentIndex),
+              child: pages[_currentIndex],
+            ),
+          ),
         ),
 
         Padding(
@@ -67,7 +87,7 @@ class _BottomTabSwitcherState extends State<BottomTabSwitcher> {
               width: 280,
               height: 70,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(255, 255, 255, 0.75),
                 borderRadius: BorderRadius.all(Radius.circular(60)),
                 border: Border.all(
                   color: Color.fromRGBO(217, 217, 217, 1),
