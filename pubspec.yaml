@@ -14,6 +14,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_slidable: ^3.0.0
+
   device_preview: 1.2.0
 
   carousel_slider: 5.0.0
